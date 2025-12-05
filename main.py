@@ -1,9 +1,15 @@
+import sys
+
 from stats import get_num_words, get_num_chars, sort_by_char_count
 
-FILEPATH = "books/frankenstein.txt"
 
 def main():
-    text = get_book_text()
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
+    filepath = sys.argv[1]
+    text = get_book_text(filepath)
     if not text:
         exit(1)
         
@@ -11,23 +17,23 @@ def main():
     num_chars = get_num_chars(text)
 
     sorted_chars = sort_by_char_count(num_chars)
-    print_report(num_words, sorted_chars)
+    print_report(filepath, num_words, sorted_chars)
 
-def get_book_text():
+def get_book_text(filepath):
     try:
-        f = open(FILEPATH)
+        f = open(filepath)
     except FileNotFoundError:
-        print("no file was found in path", FILEPATH)
+        print("no file was found in path", filepath)
         return None
     else:
         with f:
             return f.read()
 
 
-def print_report(word_count, char_counts):
+def print_report(filepath, word_count, char_counts):
     report = f"""
 ============ BOOKBOT ============
-Analyzing book found at {FILEPATH}...
+Analyzing book found at {filepath}...
 ----------- Word Count ----------
 Found {word_count} total words
 --------- Character Count -------"""
