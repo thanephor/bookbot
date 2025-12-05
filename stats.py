@@ -1,8 +1,9 @@
-def get_num_words(text):
+
+def get_num_words(text: str) -> int:
     return len(text.split())
 
 
-def get_num_chars(text):
+def get_num_chars(text: str) -> dict:
     chars = {}
     for character in text:
         if character.isalpha():
@@ -14,13 +15,11 @@ def get_num_chars(text):
 
     return chars
 
-def sort_by_char_count(char_counts):
-    def sort_on(items):
-        return items["num"]
-    
-    res = []
+
+def sort_by_char_count(char_counts: dict) -> list[dict]:
+    res: list[dict] = []
     for char, count in char_counts.items():
         res.append({"char": char, "num" :count})
 
-    res.sort(reverse=True, key=sort_on)
+    res.sort(reverse=True, key=lambda items: items["num"])
     return res

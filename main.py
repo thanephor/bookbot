@@ -11,7 +11,8 @@ def main():
     filepath = sys.argv[1]
     text = get_book_text(filepath)
     if not text:
-        exit(1)
+        print("The provided file was empty")
+        sys.exit(1)
         
     num_words = get_num_words(text)
     num_chars = get_num_chars(text)
@@ -19,7 +20,8 @@ def main():
     sorted_chars = sort_by_char_count(num_chars)
     print_report(filepath, num_words, sorted_chars)
 
-def get_book_text(filepath):
+
+def get_book_text(filepath: str) -> str | None:
     try:
         f = open(filepath)
     except FileNotFoundError:
@@ -30,7 +32,7 @@ def get_book_text(filepath):
             return f.read()
 
 
-def print_report(filepath, word_count, char_counts):
+def print_report(filepath: str, word_count: int, char_counts: list[dict]):
     report = f"""
 ============ BOOKBOT ============
 Analyzing book found at {filepath}...
